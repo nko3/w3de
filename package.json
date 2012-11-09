@@ -1,0 +1,19 @@
+{
+  "name": "nko3-w3de",
+  "version": "0.0.0",
+  "description": "W3DE",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/w3de.git"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "w3de.nko3"
+}
