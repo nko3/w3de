@@ -1,16 +1,25 @@
 {
   "name": "nko3-w3de",
   "version": "0.0.0",
-  "description": "W3DE",
-  "main": "server.js",
+  "description": "W3 Desktop Environment",
+  "author": "Pavan Kumar Sunkara",
+  "homepage": "http://github.com/w3de",
   "scripts": {
-    "start": "node server.js"
+    "test": "vows --spec",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:nko3/w3de.git"
   },
   "dependencies": {
+    "union": "0.3.0",
+    "flatiron": "0.3.0",
+    "st": "0.1.0"
+  },
+  "devDependencies": {
+    "api-easy": "0.3.2",
+    "vows": "0.6.1"
   },
   "engines": {
     "node": "0.8.x"
