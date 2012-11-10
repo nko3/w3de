@@ -13,7 +13,7 @@
     "url": "git@github.com:nko3/w3de.git"
   },
   "dependencies": {
-    "union": "0.3.0",
+    "union": "0.3.4",
     "flatiron": "0.3.0",
     "st": "0.1.0",
     "connect": "2.6.2",

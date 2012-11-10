@@ -28,14 +28,17 @@ app.use(flatiron.plugins.http, {
     stream: true
   },
   before: [
+    require('./middleware'),
     connect.cookieParser('iluvrandomstringz'),
     connect.session({ store: store, secret: 'ireallyluvthem' })
   ]
 });
 
-app.use(flatiron.plugins.static, {
-  index: 'index.html',
-  dir: path.join(__dirname, 'public')
+app.use(flatiron.plugins.static, { dir: path.join(__dirname, 'public') });
+
+// Root route to server index.html
+app.router.get('/', function () {
+  this.res.end(fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8'));
 });
 
 // The connect-redis module doesn't listen for errors on the redis client so we
