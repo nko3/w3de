@@ -15,7 +15,9 @@
   "dependencies": {
     "union": "0.3.0",
     "flatiron": "0.3.0",
-    "st": "0.1.0"
+    "st": "0.1.0",
+    "connect": "2.6.2",
+    "connect-redis": "1.4.5"
   },
   "devDependencies": {
     "api-easy": "0.3.2",
