@@ -18,6 +18,9 @@
     $.fn.foundationClearing         ? $doc.foundationClearing() : null;
 
     $.fn.placeholder                ? $('input, textarea').placeholder() : null;
+
+    initiateMenu();
+    initiateLoginManager();
   });
 
   // UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE8 SUPPORT AND ARE USING .block-grids
@@ -33,6 +36,74 @@
         window.scrollTo(0, 1);
       }, 0);
     });
+  }
+
+  key.originalFilter = key.filter;
+
+  var toggleKeymasterFilter = function () {
+    if (key.filter === key.originalFilter) {
+      key.filter = function (event) {
+        return true;
+      }
+    } else {
+      key.filter = key.originalFilter;
+    }
+  }
+
+  var initiateLoginManager = function () {
+    if (!window.Session || !window.Session.logged) {
+      key('enter', 'login', function () {
+        var inputs = $('#login input')
+          , username = inputs[0].value
+          , password = inputs[1].value;
+
+        $('#login form').hide();
+        $('#login .loader').show();
+
+        $.ajax({
+          type: "POST",
+          url: "/login",
+          data: { username: username, password: password },
+          dataType: 'json',
+          success: function (data) {
+            if (!data.success) {
+              $('#login .loader').hide();
+              $('#login form').show();
+
+              ui.error('Error', 'Login failed').effect('slide');
+              return;
+            }
+
+            window.Session = data.session;
+
+            toggleKeymasterFilter();
+            initiateDesktop();
+            $('#login').trigger('reveal:close');
+          }
+        });
+      });
+
+      key.setScope('login');
+      toggleKeymasterFilter();
+
+      $('#login').reveal({
+        closeOnBackgroundClick: false,
+        closeOnEscapeReleased: false
+      });
+
+      $('body').removeClass('loader');
+    } else {
+      initiateDesktop();
+    }
+  };
+
+  var initiateMenu = function () {
+    window.Menu = ui.menu();
+
+    window.oncontextmenu = function (e) {
+      e.preventDefault();
+      window.Menu.moveTo(e.pageX, e.pageY).show();
+    };
   }
 
 })(jQuery, this);

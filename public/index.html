@@ -14,31 +14,35 @@
   <title>W3 Desktop Environment</title>
 
   <!-- Included CSS Files (Compressed) -->
-  <link rel="stylesheet" href="css/foundation.css">
-  <link rel="stylesheet" href="css/ui.css">
-  <link rel="stylesheet" href="css/inconsolata.css">
-  <link rel="stylesheet" href="css/ligaturesymbols.css">
+  <link rel="stylesheet" href="/css/foundation.css">
+  <link rel="stylesheet" href="/css/ui.css">
+  <link rel="stylesheet" href="/css/inconsolata.css">
+  <link rel="stylesheet" href="/css/ligaturesymbols.css">
 
   <!-- Initialize CSS rules -->
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="/css/app.css">
 
   <!-- Included JS Files (Compressed) -->
-  <script src="js/jquery.js"></script>
-  <script src="js/foundation.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/jquery.placeholder.js"></script>
 
-  <script src="js/jquery.placeholder.js"></script>
-  <script src="js/foundation.mediaQueryToggle.js"></script>
-  <script src="js/foundation.navigation.js"></script>
-  <script src="js/foundation.buttons.js"></script>
-  <script src="js/foundation.tabs.js"></script>
-  <script src="js/foundation.accordion.js"></script>
-  <script src="js/foundation.alerts.js"></script>
+  <script src="/js/foundation.js"></script>
+  <script src="/js/foundation.navigation.js"></script>
+  <script src="/js/foundation.buttons.js"></script>
+  <script src="/js/foundation.tabs.js"></script>
+  <script src="/js/foundation.accordion.js"></script>
+  <script src="/js/foundation.alerts.js"></script>
+  <script src="/js/foundation.reveal.js"></script>
 
-  <script src="js/ui.js"></script>
-  <script src="js/mustache.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/mustache.js"></script>
+  <script src="/js/keymaster.js"></script>
 
   <!-- Initialize JS Plugins -->
-  <script src="js/app.js"></script>
+  <script src="/js/app.js"></script>
+
+  <!-- Initialize user data -->
+  <script src="/session.json" type="text/javascript"></script>
 
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
@@ -46,9 +50,26 @@
   <![endif]-->
 
 </head>
-<body>
+<body class="loader">
 
+  <div id="login" class="reveal-modal small">
+    <div class="row">
+      <div class="ten columns centered" style="text-align: center;">
+        <h1>w3de.nko3.jit.su</h1>
+      </div>
+    </div>
 
+    <div class="row loader" style="display: none;">
+      <div class="two columns centered">
+        <img src="/img/loader.gif">
+      </div>
+    </div>
+
+    <form>
+      <input name="username" type="text" placeholder="username">
+      <input name="password" type="password" placeholder="password">
+    </form>
+  </div>
 
 </body>
 </html>

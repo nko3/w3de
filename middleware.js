@@ -1,7 +1,18 @@
 var flatiron = require('flatiron')
+  , fs = require('fs')
+  , path = require('path')
   , app = flatiron.app;
 
 module.exports = function (req, res) {
+  res.error = {
+    json: function (err, code) {
+      res.json(code, { success: false, message: err.body || err.message });
+    },
+    html: function (err, code) {
+      res.html(code, fs.readFileSync(path.join(__dirname, 'public', 'error.html'), 'utf8'));
+    }
+  };
+
   /**
    * Redirect the user.
    */

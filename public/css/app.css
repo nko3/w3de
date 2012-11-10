@@ -1,0 +1,38 @@
+body.loader {
+  background: url('../img/loader.gif') 50% 50% no-repeat;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+#login form input {
+  margin: 20px auto;
+  width: 50%;
+  font-weight: bold;
+}
+
+#login img {
+  margin: 20px 12px;
+}
+
+.notification.error {
+  background: rgba(198, 15, 19, 0.75);
+}
+
+.notification.warn {
+  background: rgba(43, 166, 203, 0.75);
+}
+
+.notification.success {
+  background: rgba(93, 164, 35, 0.75);
+}
+
+.notification {
+  background: rgba(0, 0, 0, 0.75);
+}

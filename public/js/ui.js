@@ -168,6 +168,7 @@ function type(type) {
 exports.info = exports.notify;
 exports.warn = type('warn');
 exports.error = type('error');
+exports.success = type('success');
 
 /**
  * Initialize a new `Notification`.

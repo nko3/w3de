@@ -29,6 +29,7 @@ app.use(flatiron.plugins.http, {
   },
   before: [
     require('./middleware'),
+    connect.bodyParser(),
     connect.cookieParser('iluvrandomstringz'),
     connect.session({ store: store, secret: 'ireallyluvthem' })
   ]
@@ -38,8 +39,11 @@ app.use(flatiron.plugins.static, { dir: path.join(__dirname, 'public') });
 
 // Root route to server index.html
 app.router.get('/', function () {
-  this.res.end(fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8'));
+  this.res.html(200, fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8'));
 });
+
+// Serve all the other routes
+require('./lib/sessions');
 
 // The connect-redis module doesn't listen for errors on the redis client so we
 // need to handle that our selfs if we don't want our app to crash with silly
