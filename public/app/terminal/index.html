@@ -62,6 +62,18 @@
           document.title = title;
         });
 
+        term.on('keydown', function (e) {
+          if (e.ctrlKey && e.which == 72) {
+            $('#help-terminal').reveal();
+            return false;
+          }
+
+          if (e.ctrlKey && e.which == 68) {
+            window.location.href = '/';
+            return false;
+          }
+        });
+
         term.open();
 
         $('.terminal').addClass('twelve');
@@ -85,11 +97,11 @@
 </head>
 <body class="loader">
 
-  <div id="help-terminal" class="reveal-modal small">
+  <div id="help-terminal" class="reveal-modal medium">
     <div class="row">
       <div class="ten columns centered panel">
         <ul class="square">
-          <li>Use <abbr>ALT + F4</abbr> to go back</li>
+          <li>Use <abbr>CTRL + D</abbr> to go back</li>
         </ul>
       </div>
     </div>

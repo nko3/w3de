@@ -55,18 +55,6 @@
     if (window.location.pathname != '/terminal') return;
 
     if (window.Session && window.Session.logged) {
-      key('ctrl+h', 'terminal', function () {
-        $('#help-terminal').reveal();
-        return false;
-      });
-
-      key('alt+f4', 'terminal', function () {
-        window.location.href = '/';
-        return false;
-      });
-
-      key.setScope('terminal');
-
       ui.notify('Help', 'Press CTRL + H for help').effect('slide').sticky();
     } else {
       window.location.href = '/';
