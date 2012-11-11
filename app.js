@@ -14,7 +14,8 @@ app.config.file({ file: path.join(__dirname, 'config.json') });
 var environment = app.config.get('NODE_ENV') || 'development'
   , production = environment === 'production'
   , config = app.config.get(environment)
-  , store = new RedisStore(config.redis);
+  , store = new RedisStore(config.redis)
+  , appCache = {};
 
 // Set correct configuration
 app.config.set('app', config);
@@ -50,9 +51,10 @@ require('./lib/sessions');
   'terminal',
   'filebrowser'
 ].forEach(function (e) {
+  appCache[e] = fs.readFileSync(path.join(__dirname, 'public', 'app', e, 'index.html'), 'utf8');
   app.router.get('/' + e, function () {
     if (this.req.session && this.req.session.logged) {
-      this.res.html(200, fs.readFileSync(path.join(__dirname, 'public', 'app', e, 'index.html'), 'utf8'));
+      this.res.html(200, appCache[e]);
     } else {
       this.res.redirect('/');
     }
