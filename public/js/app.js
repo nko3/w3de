@@ -22,6 +22,7 @@
     initiateMenu();
     initiateLoginManager();
     initiateTerminal();
+    initiateFilebrowser();
   });
 
   // UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE8 SUPPORT AND ARE USING .block-grids
@@ -56,6 +57,16 @@
 
     if (window.Session && window.Session.logged) {
       ui.notify('Help', 'Press CTRL + H for help').effect('slide').sticky();
+    } else {
+      window.location.href = '/';
+    }
+  }
+
+  var initiateFilebrowser = function () {
+    if (window.location.pathname != '/filebrowser') return;
+
+    if (window.Session && window.Session.logged) {
+      ui.notify('Help', 'Press CTLR + H for help').effect('slide').sticky();
     } else {
       window.location.href = '/';
     }
