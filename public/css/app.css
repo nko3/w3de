@@ -2,6 +2,11 @@ body.loader {
   background: url('../img/loader.gif') 50% 50% no-repeat;
 }
 
+body.desktop {
+  /* background: url('../img/wallpaper.jpg') 50% 50% no-repeat; */
+  background: #eee;
+}
+
 html {
   height: 100%;
 }
@@ -35,4 +40,21 @@ body {
 
 .notification {
   background: rgba(0, 0, 0, 0.75);
+}
+
+#desktop {
+  margin: 50px;
+}
+
+#desktop .columns {
+  text-align: center;
+}
+
+#desktop a.lsf {
+  color: #000;
+  font-size: 100px;
+}
+
+#desktop .columns.active {
+  box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
 }
