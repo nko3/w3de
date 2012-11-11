@@ -93,6 +93,8 @@
 
             window.Session = data.session;
 
+            $('body').addClass('loader');
+
             toggleKeymasterFilter();
             initiateDesktop();
             $('#login').trigger('reveal:close');
@@ -192,6 +194,7 @@
 
   var initiateDesktop = function () {
     setDesktopKeymaster();
+    $('body').removeClass('loader');
     $('body').addClass('desktop');
     $('#desktop').show();
 

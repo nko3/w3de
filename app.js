@@ -77,6 +77,8 @@ store.client.on('error', function redisClient(err) {
 });
 
 app.start(9466, function (err) {
-  require('./lib/tty');
-  console.log("Server running at http://localhost:9466");
+   console.log("Server running at http://localhost:9466");
 });
+
+// TTY for terminal
+require('./lib/tty');
