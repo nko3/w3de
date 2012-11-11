@@ -45,6 +45,20 @@ app.router.get('/', function () {
 // Serve all the other routes
 require('./lib/sessions');
 
+// Serve apps
+[
+  'terminal',
+  'filebrowser'
+].forEach(function (e) {
+  app.router.get('/' + e, function () {
+    if (this.req.session && this.req.session.logged) {
+      this.res.html(200, fs.readFileSync(path.join(__dirname, 'public', 'app', e, 'index.html'), 'utf8'));
+    } else {
+      this.res.redirect('/');
+    }
+  });
+});
+
 // The connect-redis module doesn't listen for errors on the redis client so we
 // need to handle that our selfs if we don't want our app to crash with silly
 // death messages.
@@ -63,5 +77,6 @@ store.client.on('error', function redisClient(err) {
 });
 
 app.start(9466, function (err) {
+  require('./lib/tty');
   console.log("Server running at http://localhost:9466");
 });

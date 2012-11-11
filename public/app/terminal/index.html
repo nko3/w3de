@@ -44,6 +44,39 @@
   <!-- Initialize user data -->
   <script src="/session.json" type="text/javascript"></script>
 
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app/terminal/term.js"></script>
+
+  <script>
+  ;(function() {
+    return setTimeout(function() {
+      var term = new Terminal(80, 24)
+        , socket = io.connect();
+
+      socket.on('connect', function() {
+        term.on('data', function(data) {
+          socket.emit('data', data);
+        });
+
+        term.on('title', function(title) {
+          document.title = title;
+        });
+
+        term.open();
+
+        $('.terminal').addClass('twelve');
+        $('.terminal').addClass('columns');
+        $('body').removeClass('loader');
+        $('body').addClass('row');
+
+        socket.on('data', function(data) {
+          term.write(data);
+        });
+      });
+    }, 1000);
+  }).call(this);
+  </script>
+
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -52,48 +85,13 @@
 </head>
 <body class="loader">
 
-  <div id="login" class="reveal-modal small">
-    <div class="row">
-      <div class="ten columns centered" style="text-align: center;">
-        <h1>w3de.nko3.jit.su</h1>
-      </div>
-    </div>
-
-    <div class="row loader" style="display: none;">
-      <div class="two columns centered">
-        <img src="/img/loader.gif">
-      </div>
-    </div>
-
-    <form>
-      <input name="username" type="text" placeholder="username">
-      <input name="password" type="password" placeholder="password">
-    </form>
-  </div>
-
-  <div id="help-desktop" class="reveal-modal small">
+  <div id="help-terminal" class="reveal-modal small">
     <div class="row">
       <div class="ten columns centered panel">
         <ul class="square">
-          <li>Use <abbr>CTRL + D</abbr> to logout
-          <li>Use <abbr>&larr;</abbr>, <abbr>&darr;</abbr>, <abbr>&uarr;</abbr>, <abbr>&rarr;</abbr> to move between applications</li>
-          <li>Use <abbr>ENTER</abbr> to select application</li>
+          <li>Use <abbr>ALT + F4</abbr> to go back</li>
+        </ul>
       </div>
-    </div>
-  </div>
-
-  <div id="desktop" style="display: none;">
-    <div class="row" id="r1">
-      <div class="two columns" id="c1">
-        <a href='/terminal' class="lsf" title="Terminal">terminal</a>
-      </div>
-      <div class="two columns" id="c2">
-        <a href='/filebrowser' class="lsf" title="File Browser">folder</a>
-      </div>
-      <div class="two columns" id="c3"></div>
-      <div class="two columns" id="c4"></div>
-      <div class="two columns" id="c5"></div>
-      <div class="two columns" id="c6"></div>
     </div>
   </div>
 

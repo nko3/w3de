@@ -21,6 +21,7 @@
 
     initiateMenu();
     initiateLoginManager();
+    initiateTerminal();
   });
 
   // UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE8 SUPPORT AND ARE USING .block-grids
@@ -50,7 +51,31 @@
     }
   }
 
+  var initiateTerminal = function () {
+    if (window.location.pathname != '/terminal') return;
+
+    if (window.Session && window.Session.logged) {
+      key('ctrl+h', 'terminal', function () {
+        $('#help-terminal').reveal();
+        return false;
+      });
+
+      key('alt+f4', 'terminal', function () {
+        window.location.href = '/';
+        return false;
+      });
+
+      key.setScope('terminal');
+
+      ui.notify('Help', 'Press CTRL + H for help').effect('slide').sticky();
+    } else {
+      window.location.href = '/';
+    }
+  }
+
   var initiateLoginManager = function () {
+    if (window.location.pathname != '/') return;
+
     if (window.Session && window.Session.logged) {
       initiateDesktop();
     } else {
@@ -120,7 +145,7 @@
     };
 
     key('enter', 'desktop', function () {
-      $('#r' + r + ' #c' + c).click();
+      $('#r' + r + ' #c' + c + ' a')[0].click();
       return false;
     });
 
@@ -152,10 +177,27 @@
       return false;
     });
 
-    key('h', 'desktop', function () {
+    key('ctrl+h', 'desktop', function () {
       $('#help-desktop').reveal();
       return false;
-    })
+    });
+
+    key('ctrl+d', 'desktop', function () {
+      $.ajax({
+        type: "GET",
+        url: "/logout",
+        dataType: 'json',
+        success: function (data) {
+          if (data.success) return window.location.href = '/';
+          ui.error('Error', 'Logout failed').effect('slide');
+        },
+        error: function () {
+          ui.error('Error', 'Logout failed').effect('slide');
+        }
+      });
+
+      return false;
+    });
 
     key.setScope('desktop');
   };
@@ -165,7 +207,7 @@
     $('body').addClass('desktop');
     $('#desktop').show();
 
-    ui.notify('Help', 'Press H for help').effect('slide').sticky();
+    ui.notify('Help', 'Press CTRL + H for help').effect('slide').sticky();
   };
 
   var initiateMenu = function () {
