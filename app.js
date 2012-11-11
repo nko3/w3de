@@ -45,6 +45,7 @@ app.router.get('/', function () {
 
 // Serve all the other routes
 require('./lib/sessions');
+require('./lib/filebrowser');
 
 // Serve apps
 [

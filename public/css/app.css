@@ -86,3 +86,41 @@ ul li abbr {
   line-height: 1.4;
   white-space: nowrap;
 }
+
+#filebrowser {
+  margin: 20px auto;
+}
+
+#filebrowser .columns {
+  text-align: center;
+}
+
+#filebrowser a.lsf {
+  color: #000;
+  font-size: 50px;
+}
+
+#fileview {
+  margin: 50px auto;
+}
+
+#fileview .row {
+  margin: 10px auto;
+}
+
+#fileview a.lsf {
+  font-size: 100px;
+}
+
+#fileview span {
+  font-weight: bold;
+  font-family: Inconsolata;
+}
+
+#fileview .columns {
+  padding-bottom: 10px;
+}
+
+#filebrowser .columns.active {
+  box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+}

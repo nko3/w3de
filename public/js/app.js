@@ -66,7 +66,139 @@
     if (window.location.pathname != '/filebrowser') return;
 
     if (window.Session && window.Session.logged) {
+      var rid = 0, cid = 0;
+
+      var loadFiles = function (path) {
+        $.ajax({
+          type: "POST",
+          url: "/filebrowser/browse",
+          data: { path: path },
+          dataType: 'json',
+          success: function (data) {
+            if (data.success) {
+              var rid = -1, cid = 6, rows = [];
+
+              data.contents.dir.forEach(function (e) {
+                if (cid == 6) {
+                  rows.push([]); rid += 1; cid = 0;
+                }
+                rows[rid].push({ cid: cid, name: e, type: 'folder' });
+                cid += 1;
+              });
+
+              data.contents.file.forEach(function (e) {
+                if (cid == 6) {
+                  rows.push([]); rid += 1; cid = 0;
+                }
+                rows[rid].push({ cid: cid, name: e, type: 'file'});
+                cid += 1;
+              });
+
+              var html = '';
+
+              rows.forEach(function (e,i) {
+                html+= '<div class="row" id="r'+i+'">';
+                e.forEach(function (c) {
+                  html+= '<div class="two columns" id="c'+c.cid+'">';
+                  html+= '<a href="#'+c.name+'" class="lsf">' + c.type;
+                  html+= '</a><br><span>' + c.name + '</div>';
+                });
+
+                for(var i=0; i<6-e.length; i++) {
+                  html+= '<div class="two columns"></div>';
+                }
+                html+= '</div>';
+              });
+
+              cid = 0; rid = 0;
+              $('#fileview').html(html);
+            } else {
+              ui.warn('Error', 'Something went wrong').effect('slide');
+            }
+          },
+          error: function () {
+            ui.error('Error', 'Something went wrong').effect('slide');
+          }
+        });
+
+        return false;
+      };
+
       ui.notify('Help', 'Press CTLR + H for help').effect('slide').sticky();
+
+      var remembers = [], ri = -1, cp = [];
+
+      key('ctrl+h', 'filebrowser', function () {
+        $('#help-filebrowser').reveal();
+        return false;
+      });
+
+      key('ctrl+d', 'filebrowser', function () {
+        window.location.href = '/';
+        return false;
+      });
+
+      key('ctrl+left', 'filebrowser', function () {
+        if (ri < 0) return false;
+        ri -= 1;
+        cp = JSON.parse(JSON.stringify((remembers[ri])));
+        return loadFiles(cp);
+      });
+
+      key('ctrl+right', 'filebrowser', function () {
+        if (ri == remembers.length-1) return false;
+        ri += 1;
+        cp = JSON.parse(JSON.stringify((remembers[ri])));
+        return loadFiles(cp)
+      });
+
+      key('ctrl+up', 'filebrowser', function () {
+        cp.pop(); ri += 1;
+        remembers.push(JSON.parse(JSON.stringify(cp)));
+        return loadFiles(cp);
+      });
+
+      key('ctrl+r', 'filebrowser', function () {
+        return loadFiles(cp);
+      })
+
+      key('up', function () {
+        $('#r'+rid+' #c'+cid).removeClass('active');
+        rid -= 1;
+        $('#r'+rid+' #c'+cid).addClass('active');
+      })
+
+      key('down', function () {
+        $('#r'+rid+' #c'+cid).removeClass('active');
+        rid += 1;
+        $('#r'+rid+' #c'+cid).addClass('active');
+      })
+
+      key('left', function () {
+        $('#r'+rid+' #c'+cid).removeClass('active');
+        cid -= 1;
+        $('#r'+rid+' #c'+cid).addClass('active');
+      })
+
+      key('right', function () {
+        $('#r'+rid+' #c'+cid).removeClass('active');
+        cid += 1;
+        $('#r'+rid+' #c'+cid).addClass('active');
+      })
+
+      key('enter', function () {
+        var name = $('#r'+rid+' #c'+cid+' a')[0].href;
+        name = name.substr(name.indexOf('#')+1);
+        cp.push(name); ri += 1;
+        remembers.push(JSON.parse(JSON.stringify(cp)));
+        loadFiles(cp);
+      })
+
+      key.setScope('filebrowser');
+
+      loadFiles(['']);
+
+      $('body').removeClass('loader');
     } else {
       window.location.href = '/';
     }
